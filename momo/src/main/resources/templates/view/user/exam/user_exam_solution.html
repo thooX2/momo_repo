@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>모의고사</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+	<link rel="stylesheet" th:href="@{/user/css/exam/userExamTake/realstudy_common_utf8.css}">
+	<link rel="stylesheet" th:href="@{/user/css/exam/userExamTake/examCustom.css}">
+	<link rel="stylesheet" type="text/css" href="/user/css/exam/userExamSolution/realstudy_common_utf8.css">
+	<link rel="stylesheet" type="text/css" href="/user/css/exam/userExamSolution/choproblem.css">
+
+	<!-- 페이지에 있던.css -->
+	<link rel="stylesheet" type="text/css" href="/user/css/exam/userExamSolution/examCustom.css">
+
+</head>
+<style>
+	a {
+		text-decoration: unset !important;
+		font-weight: bolder;
+	}
+
+
+	.clickedImg {
+		width: 70% !important
+	}
+</style>
+
+<body>
+
+	<div class="popexam-wrap">
+		<div class="popexam-wrap__top">
+
+			<h1 class="popexam-wrap__header--title" th:text="${examName}">기출 문제은행</h1>
+			<div class="popexam-wrap__header--inner">
+				<h2 class="popexam-wrap__header--subject" id="subTxt">
+					<span>[한국사]</span><span style="color:black">우유창고-플랫화이트</span><em>(20문제)</em>
+				</h2>
+				<ul class="popexam-wrap__header--button">
+					<li>
+						<button type="button" id="nextSubject"
+							style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+							다음시험 응시하기
+						</button>
+
+					</li>
+				</ul>
+			</div>
+			<ul class="popexam-wrap__tap popexam-wrap__tap-header" id="topMenu">
+				<li class="popexam-wrap__tap-header--item"><a href="#">
+						<b>STEP 1.</b> 문제풀기
+					</a></li>
+				<li class="popexam-wrap__tap-header--item on"><a href="javascript:;">
+						<b>STEP 2.</b> 정답/해설확인
+					</a></li>
+			</ul>
+			<!-- //popexam-wrap__header-tap -->
+
+
+		</div>
+
+		<div class="popexam-wrap__container" id="contArea">
+			<div class="popexam-wrap__contents popexam-wrap__contents-step02">
+				<div class="popexam-wrap__section scroll-in" id="expScroll">
+					<ul class="popexam-wrap__tap-layout pop_cont--tab">
+						<li class="popexam-wrap__tap-layout--item popexam-wrap__tap-layout--item_num01 on"><a
+								href="javascript:;" onclick="fncExplainAreaSet('all','')">전체 문제보기</a></li>
+						<li class="popexam-wrap__tap-layout--item popexam-wrap__tap-layout--item_num02"><a
+								href="javascript:;" onclick="fncExplainAreaSet('one',1)">1문제씩 보기</a></li>
+					</ul>
+					<div id="ExplainArea">
+
+						<!-- //popexam-wrap__tap-layout -->
+						<div class="popexam-wrap__question" th:each="qil,status:${questionInfoList}">
+							<div class="popexam-wrap__question--subject">
+								<strong th:text="${'[문제 '+(status.index+1)+'번]'}">[문제 1번]</strong>
+
+								<a href="javascript:;" class="popexam-wrap__question--link">문제 정보</a>
+								<a href="javascript:;" class="button-ico__exam button-ico__exam-scrap">
+									<span class="blind">스크랩</span>
+								</a>
+								<div class="popexam-wrap__info popexam-wrap__info-first" id="detail206120">
+									<div class="popexam-wrap__info-first--header">
+										<strong>문제 정보</strong>
+										<a href="javascript:;" class="button-ico__exam button-ico__exam-close"></a>
+									</div>
+									<div class="popexam-wrap__info-first--inner">
+										<ul class="popexam-wrap__info-first--list">
+											<li class="popexam-wrap__info-first--item">
+												<strong>문제 유형</strong>&nbsp;&nbsp;&nbsp;<span
+													th:text="${qil.ExamQnaTypeNm}"></span>
+											</li>
+											<li class="popexam-wrap__info-first--item">
+												<strong>문제 단원</strong>&nbsp;&nbsp;&nbsp;<span
+													th:text="${qil.ExamQnaChapNm}"></span>
+											</li>
+											<li class="popexam-wrap__info-first--item">
+												<strong>문제 배점</strong>&nbsp;&nbsp;&nbsp;<span
+													th:text="${qil.QnaScr+'점'}"></span>
+											</li>
+											<li class="popexam-wrap__info-first--item">
+												<strong>문제 출처</strong>&nbsp;&nbsp;&nbsp;<span
+													th:text="${qil.QnaSubject}"></span>
+											</li>
+											<li class="popexam-wrap__info-first--item">
+												<strong>문제 등록</strong>&nbsp;&nbsp;&nbsp;<span
+													th:text="${#dates.format(qil.QnaCreateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="popexam-wrap__question__source" th:text="${'출처 : '+qil.QnaSubject}">출처 :
+								2023.10.12 학평&nbsp;한국사&nbsp;5번</div>
+
+							<div class="popexam-wrap__explain">
+								<div class="popexam-wrap__explain--left">
+
+									<div class="popexam-wrap__question__txt"></div>
+
+									<div class="popexam-wrap__question__title" th:utext="${qil.QnaQst}"
+										style="height: auto; overflow: visible; display: inline-block; padding: 10px; box-sizing: border-box;">
+									</div>
+									<div class="popexam-wrap__question__title">
+										<div th:each="qilImg : ${qnaImgList}" class="question-image" style="width:100%"
+											th:if="${qil.ExamQnaCode == qilImg.qnaCode && qilImg.qnaImgType =='fileInput'}">
+											<img th:src="@{${qilImg.qnaImgPath}}" alt="@{${qilImg.qnaImgOriginalName}}"
+												class="question_img" style="width:10%"/>
+										</div>
+									</div>
+									<div class="popexam-wrap__question__choice">
+										<ol>
+											<li>① &nbsp;<span style="text-indent: -15.0pt; margin-left: 15.0pt;"
+													th:text="${qil.QnaSlt1}">105인
+													사건이 일어났다.</span></li>
+											<li>② &nbsp;<span style="text-indent: -15.0pt; margin-left: 15.0pt;"
+													th:text="${qil.QnaSlt2}">&nbsp;독립
+													협회가 만들어졌다.</span></li>
+											<li>③ &nbsp;<span style="text-indent: -15.0pt; margin-left: 15.0pt;"
+													th:text="${qil.QnaSlt3}">&nbsp;고종이
+													강제로 퇴위당하였다.</span></li>
+											<li>④ &nbsp;<span style="text-indent: -15.0pt; margin-left: 15.0pt;"
+													th:text="${qil.QnaSlt4}">&nbsp;대한민국
+													임시 정부가 수립되었다.</span></li>
+											<li>⑤ &nbsp;<span style="text-indent: -15.0pt; margin-left: 15.0pt;"
+													th:text="${qil.QnaSlt5}">&nbsp;국가
+													재건 최고 회의가 설치되었다.</span></li>
+										</ol>
+									</div>
+
+								</div>
+								<!-- //popexam-wrap__explain-left -->
+
+								<div class="popexam-wrap__explain--right scroll-in">
+									<div class="popexam-wrap__answer">
+
+										<h5 class="popexam-wrap__explain--title popexam-wrap__explain--title_second">해설
+										</h5>
+										<div class="popexam-wrap__answer--inner">
+
+											<div class="popexam-wrap__question--img" th:utext="${qil.QnaCmt}">
+
+											</div>
+											<div class="popexam-wrap__question__title" th:each="qilImg : ${qnaImgList}"
+												th:if="${qil.ExamQnaCode == qilImg.qnaCode && qilImg.qnaImgType =='question_file'}">
+												<div class="question-image">
+													<img th:src="@{${qilImg.qnaImgPath}}"
+														alt="@{${qilImg.qnaImgOriginalName}}" class="question_img"
+														style="width:20%" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- //popexam-wrap__answer -->
+
+
+									<div class="popexam-wrap__result">
+										<!--										<h5 class="popexam-wrap__explain--title">채점 결과 및 답안 선택률</h5>-->
+										<h5 class="popexam-wrap__explain--title">채점 결과</h5>
+										<div class="popexam-wrap__result--info">
+											<p class="table-type__answer--mine">
+												<span class="circle"><img
+														src="/user/img/exam/userExamSolution/ic_cir.gif" alt=""></span>
+												내답 <span class="circle2"><img
+														src="/user/img/exam/userExamSolution/ic_cir_on.gif"
+														alt=""></span>
+												<em>정답</em>
+											</p>
+										</div>
+										<table class="table-type__answer" border="1" cellspacing="0">
+											<colgroup>
+												<col width="65">
+												<col width="47">
+												<col width="47">
+												<col width="47">
+												<col width="47">
+												<col width="47">
+											</colgroup>
+											<tbody>
+												<tr>
+													<th class="num">
+														<p>
+															<e th:text="${(status.index+1)}">1</e><span
+																class="chk_o"></span>
+														</p>
+													</th>
+
+													<td><input type="radio" disabled=""> </td>
+													<td><input type="radio" disabled=""></td>
+													<td><input type="radio" disabled=""></td>
+													<td><input type="radio" disabled=""></td>
+													<td><input type="radio" disabled=""></td>
+
+												</tr>
+
+												<!--	<tr>
+													<th class="tt_per">선택률</th>
+													<td>10%</td>
+													<td>14%</td>
+													<td>6%</td>
+													<td>67%</td>
+													<td>1%</td>
+												</tr>-->
+
+											</tbody>
+										</table>
+									</div>
+									<!-- //popexam-wrap__result -->
+
+									<div class="popexam-wrap__vod">
+										<input type="hidden" id="ExplainVodhd206120" value="N">
+										<h5 class="popexam-wrap__explain--title" id="ExplainVodTxt206120"
+											style="cursor: pointer">해설강의 보기 ▼</h5>
+										<div id="ExplainVodArea206120"></div>
+									</div>
+									<!-- //popexam-wrap__vod -->
+
+									<div class="popexam-wrap__type">
+										<h5 class="popexam-wrap__explain--title">유형 뽀개기</h5>
+										<div>
+											<a href="javascript:;" onclick="fncViewSameType(12101190)"
+												class="button-txt__exam button-txt__exam--size_sm button-txt__exam--color_fill">
+												<span>10개 유사문제 풀기 &gt;</span>
+											</a>
+										</div>
+
+									</div>
+
+
+									<div class="popexam-wrap__button">
+										<a class="button-txt__exam button-txt__exam--size_sm">오류 신고 &gt;</a>
+									</div>
+									<!-- //popexam-wrap__button -->
+								</div>
+								<!-- //popexam-wrap__explain-right -->
+							</div>
+						</div>
+						<!-- //popexam-wrap__question -->
+
+
+						<!-- //popexam-wrap__tap-layout -->
+
+						<!-- //popexam-wrap__question -->
+
+
+						<!-- //popexam-wrap__tap-layout -->
+
+						<!-- //popexam-wrap__question -->
+
+
+
+					</div>
+				</div>
+				<!-- //popexam-wrap__section -->
+			</div>
+			<!-- //popexam-wrap__contents-step02 -->
+
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script th:inline="javascript">
+
+		// 페이지가 로드되면 자동으로 실행
+
+
+		// 이전 페이지에서 유저가 입력한 정답을 기반으로 해설 숫자부분에 o,x를 표시하는 함수
+		const userAnswerArr = /*[[${userAnswer}]]*/[]
+		const examAnswerArr =/*[[${examAnswer}]]*/[]
+		const $examCode =/*[[${examCode}]]*/[];
+		const questionList =/*[[${questionInfoList}]]*/[];
+		const $subject =/*[[${subject}]]*/[];
+		const $examName =/*[[${examName}]]*/[];
+		console.log($subject);
+
+		for (let i = 0; i < examAnswerArr.length; i += 1) {
+			if (Number(userAnswerArr[i]) != Number(examAnswerArr[i])) {
+				$('.num span').eq(i).removeClass().addClass('chk_x');
+			}
+			const $findRadioButton = $('.num').eq(i).closest('tr').find('input[type="radio"]');
+			$findRadioButton.eq(Number(userAnswerArr[i] - 1)).after($('<span/>', {class: "table-type__answer--chk_mine"}).append($('<img/>', {src: "/user/img/exam/userExamSolution/ic_cir.gif"})));;
+			$findRadioButton.eq(Number(examAnswerArr[i] - 1)).after($('<span/>', {class: "table-type__answer--chk_correct"}).append($('<img/>', {src: "/user/img/exam/userExamSolution/ic_cir_on.gif"})));;
+		}
+
+
+		$('.popexam-wrap__question--link').click(function (e) {
+			// 클릭된 요소가 "문제 삭제" 링크인지 확인
+			if ($(e.target).hasClass('popexam-wrap__question--link2')) {
+				e.stopPropagation(); // 이벤트 버블링을 막음
+				return; // 이벤트 핸들러 종료
+			}
+			const $targetDiv = $(e.target).parent().find('.popexam-wrap__info.popexam-wrap__info-first')
+
+			if ($targetDiv.css('display') === "none"
+				|| $targetDiv.css('display') === "") {
+				$targetDiv.css('display', 'block'); // 보이게 함
+			} else {
+				$targetDiv.css('display', 'none'); // 숨김
+
+			}
+		});
+
+		$('.button-ico__exam.button-ico__exam-close').click(function (e) {
+
+			const $targetDiv = $(e.target).parents('.popexam-wrap__info.popexam-wrap__info-first')
+
+			if ($targetDiv.css('display') === "none"
+				|| $targetDiv.css('display') === "") {
+				$targetDiv.css('display', 'block'); // 보이게 함
+			} else {
+				$targetDiv.css('display', 'none'); // 숨김
+
+			}
+		});
+		$('.button-txt__exam.button-txt__exam--size_sm').click(function () {
+			alert('해당기능은 차후에 지원예정입니다');
+		})
+
+		$('.popexam-wrap__vod>h5').click(function () {
+			alert('해당기능은 차후에 지원예정입니다');
+		})
+
+		$('.button-ico__exam.button-ico__exam-print').click(e => {
+			const $targetDiv = $('.popexam-wrap__header--print')
+			if ($targetDiv.css('display') === "none"
+				|| $targetDiv.css('display') === "") {
+				$targetDiv.css('display', 'block'); // 보이게 함
+			} else {
+				$targetDiv.css('display', 'none'); // 숨김
+
+			}
+		})
+		$('.popexam-wrap__header--print--close').click(e => {
+			const $targetDiv = $('.popexam-wrap__header--print')
+			if ($targetDiv.css('display') === "none"
+				|| $targetDiv.css('display') === "") {
+				$targetDiv.css('display', 'block'); // 보이게 함
+			} else {
+				$targetDiv.css('display', 'none'); // 숨김
+
+			}
+		})
+		$('.popexam-wrap__header--print').click(e => {
+			// 클릭된 요소가 "문제 삭제" 링크인지 확인
+			if ($(e.target).hasClass('popexam-wrap__header--print--close')) {
+				e.stopPropagation(); // 이벤트 버블링을 막음
+				return; // 이벤트 핸들러 종료
+			}
+			alert('해당기능은 차후에 지원합니다.');
+		})
+		$('.popexam-wrap__tap-header--item').click(function (e) {
+			e.preventDefault();
+
+			const reTry = confirm('되돌아가시려면 재응시가 필요합니다.\n해당 시험에 재응시하시겠습니까?');
+			if (reTry) {
+				location.replace('/exam/userExamTake');
+			}
+		})
+
+		//	시험제목 표기
+		let subjectArea = "";
+		let subjectName = "";
+		switch (questionList[0]['subMjrCatCode']) {
+			case 'smjrcc1':
+				subjectArea = '[언어 영역]';
+				subjectName = '국어';
+				break;
+			case 'smjrcc2':
+				subjectArea = '[수리 영역]';
+				subjectName = '수학';
+				break;
+			case 'smjrcc3':
+				subjectArea = '[영어 영역]';
+				subjectName = '영어';
+				break;
+			case 'smjrcc4':
+				subjectArea = '[한국사 영역]';
+				subjectName = '한국사';
+				break;
+			case 'smjrcc5':
+				subjectArea = '[사회탐구 영역]';
+				subjectName = questionList[0]['subMirCatNm'];
+				break;
+			case 'smjrcc6':
+				subjectArea = '[과학탐구 영역]';
+				subjectName = questionList[0]['subMirCatNm'];
+				break;
+			case 'smjrcc7':
+				subjectArea = '[직업탐구 영역]';
+				subjectName = questionList[0]['subMirCatNm'];
+				break;
+			case 'smjrcc8':
+				subjectArea = '[제2외국어 영역]';
+				subjectName = questionList[0]['subMirCatNm'];
+				break;
+		}
+
+		const subjectTitle = $('#subTxt')
+		subjectTitle.find('span').eq(0).text(subjectArea);
+		subjectTitle.find('span').eq(1).text(subjectName);
+
+		subjectTitle.find('em').text(`(${questionList.length}문제)`);
+
+		$('#nextSubject').click(function () {
+			const isNext = confirm('다음시험에 응시하겠습니까?')
+			if (isNext) {
+				const $form = $(`<form></form>`);
+				$form.attr('action', `/exam/${$examCode}/examination`);
+				$form.attr('method', 'get');
+
+				if ($subject != null && $subject.length != 0) {
+					$subject.forEach((element, idx) => {
+						const $subjectInput = `<input type="hidden" name="subject" value="${element}" />`;
+
+						$form.append($subjectInput);
+					})
+				}
+
+				const $subjectInput = `<input type="hidden" name="examName" value="${$examName}" />`;
+				$form.append($subjectInput);
+
+				$form.appendTo('body');
+				$form.submit();
+			}
+		})
+		$(document).on('click', 'img', function () {
+			$(this).toggleClass('clickedImg');
+		})
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks52team01.common.files.mapper.FileMapper">
+	<resultMap id="QnaImgResultMap" type="ks52team01.common.files.dto.QnaImg">
+	    <id property="qnaImgCode" column="qna_img_code" />
+	    <result property="qnaCode" column="qna_code" />
+	    <result property="userCode" column="user_code" />
+	    <result property="qnaImgType" column="qna_img_type" />
+	    <result property="qnaImgPath" column="qna_img_path" />
+	    <result property="qnaImgSortCol" column="qna_img_sort_col" />
+	    <result property="qnaImgOriginalName" column="qna_img_original_name" />
+	    <result property="qnaImgNewName" column="qna_img_new_name" />
+	    <result property="qnaFileSize" column="qna_file_size" />
+	    <result property="qnaImgCreateTime" column="qna_img_create_time" />
+	    <result property="qnaImgUpdateTime" column="qna_img_update_time" />
+	</resultMap>
+	
+	<select id="getQnaImgListByExamCode" parameterType="String" resultMap="QnaImgResultMap">
+		SELECT
+			qi.qna_img_code,
+			qi.qna_code,
+			qi.user_code,
+			qi.qna_img_type,
+			qi.qna_img_path,
+			qi.qna_img_sort_col,
+			qi.qna_img_original_name,
+			qi.qna_img_new_name,
+			qi.qna_file_size,
+			qi.qna_img_create_time,
+			qi.qna_img_update_time
+		FROM
+			qna_img qi INNER JOIN  qna_bank qb ON qi.qna_code = qb.qna_code
+		WHERE
+			1=1
+		   <if test="currentSubject != null">
+          	 and qb.sub_mir_cat_code =#{currentSubject}
+           </if>
+		   <if test="currentMjrCode != null">
+          	 and qb.sub_mjr_cat_code =#{currentMjrCode}
+           </if>
+	</select>
+	
+	
+	
+	<select id="getFileInfoByQnaCodeAndQnaImgOriginalName" parameterType="String" resultMap="QnaImgResultMap">
+		SELECT
+			qna_img_code,
+			qna_code,
+			user_code,
+			qna_img_type,
+			qna_img_path,
+			qna_img_sort_col,
+			qna_img_original_name,
+			qna_img_new_name,
+			qna_file_size,
+			qna_img_create_time,
+			qna_img_update_time
+		FROM
+			qna_img
+		WHERE
+			qna_img_original_name = #{qnaImgOriginalName} AND
+			qna_code=#{qnaCode}
+	</select>
+
+	<select id="getFileInfoByQnaCode" parameterType="String" resultMap="QnaImgResultMap">
+		SELECT
+			qna_img_code,
+			qna_code,
+			user_code,
+			qna_img_type,
+			qna_img_path,
+			qna_img_sort_col,
+			qna_img_original_name,
+			qna_img_new_name,
+			qna_file_size,
+			qna_img_create_time,
+			qna_img_update_time
+		FROM
+			qna_img
+		WHERE
+			qna_img_type = #{key} AND
+			qna_code=#{qnaCode}
+	</select>
+
+	<delete id="removeFiles" parameterType="String">
+		DELETE
+		FROM
+			qna_img
+		WHERE
+			qna_img_type=#{key} AND
+			qna_img_code=#{qnaImgCode}
+	</delete>
+	
+	<select id="getQnaImgFileInputListByQnaCode" parameterType="String" resultMap="QnaImgResultMap">
+		SELECT
+			qna_img_code,
+			qna_code,
+			user_code,
+			qna_img_type,
+			qna_img_path,
+			qna_img_sort_col,
+			qna_img_original_name,
+			qna_img_new_name,
+			qna_file_size,
+			qna_img_create_time,
+			qna_img_update_time
+		FROM
+			qna_img
+		WHERE
+			qna_img_type = 'fileInput' and
+			qna_code=#{qnaCode}
+	</select>
+	
+	<select id="getQnaImgListByQnaCode" parameterType="String" resultMap="QnaImgResultMap">
+		SELECT
+			qna_img_code,
+			qna_code,
+			user_code,
+			qna_img_type,
+			qna_img_path,
+			qna_img_sort_col,
+			qna_img_original_name,
+			qna_img_new_name,
+			qna_file_size,
+			qna_img_create_time,
+			qna_img_update_time
+		FROM
+			qna_img
+		WHERE
+			qna_img_type != 'fileInput' and
+			qna_code=#{qnaCode}
+	</select>
+	
+	<insert id="addFile" parameterType="ks52team01.common.files.dto.QnaImg">
+	    INSERT INTO qna_img (
+	        qna_img_code,
+	        qna_code,
+	        user_code,
+	        qna_img_type,
+	        qna_img_path,
+	        qna_img_sort_col,
+	        qna_img_original_name,
+	        qna_img_new_name,
+	        qna_file_size,
+	        qna_img_create_time,
+	        qna_img_update_time
+	    ) VALUES (
+	        #{qnaImgCode},
+	        #{qnaCode},
+	        #{userCode},
+	        #{qnaImgType},
+	        #{qnaImgPath},
+	        #{qnaImgSortCol},
+	        #{qnaImgOriginalName},
+	        #{qnaImgNewName},
+	        #{qnaFileSize},
+	        NOW(),
+	        #{qnaImgUpdateTime}
+	    )
+	</insert>
+	<insert id="addFiles" parameterType="ks52team01.common.files.dto.QnaImg">
+	    /* 다중 문항 이미지 정보 등록 */
+	    INSERT INTO qna_img (
+	        qna_img_code,
+	        qna_code,
+	        user_code,
+	        qna_img_type,
+	        qna_img_path,
+	        qna_img_sort_col,
+	        qna_img_original_name,
+	        qna_img_new_name,
+	        qna_file_size,
+	        qna_img_create_time,
+	        qna_img_update_time
+	    )
+	    VALUES 
+	    <foreach collection="list" item="img" separator=",">
+	        (#{img.qnaImgCode}, #{img.qnaCode}, #{img.userCode}, #{img.qnaImgType}, #{img.qnaImgPath}, 
+	        #{img.qnaImgSortCol}, #{img.qnaImgOriginalName}, #{img.qnaImgNewName}, #{img.qnaFileSize}, 
+	        NOW(), #{img.qnaImgUpdateTime})
+	    </foreach>
+</insert>
+
+</mapper>

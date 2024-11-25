@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 다른 페이지에 포함시킬 영역을 th:fragment로 선언해준다.-->
+<div class="menu" th:fragment="header" id="momoDefault">
+	<!-- Header Section Begin -->
+	<header class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="header__logo">
+						<a href="/index"> <img src="/home/img/logo.png" alt="">
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<nav class="header__menu" style="position: relative; z-index: 20;">
+						<ul>
+							<li class="active"><a href="/index">Home</a></li>
+							<li><a href="/exam/examList">모의고사</a>
+								<ul class="header__menu__dropdown">
+									<li><a href="/exam/userExamCreate">모의고사 만들기</a></li>
+									<li><a href="/exam/examList">모의고사목록</a></li>
+									<li><a href="/exam/userExamResultList">모의고사 응시목록</a></li>
+									<li><a href="/exam/userExamAnalyse">모의고사 결과분석</a></li>
+								</ul>
+							</li>
+							<li><a th:href="@{/score/scoreMain}">성적조회</a> </li>
+							<li><a href="#">학습관리</a>
+								<ul class="header__menu__dropdown">
+									<li><a th:href="@{/study/getCastSubjectList}">목표 과목 관리</a></li>
+									<li><a th:href="@{/study/getTargetUniversityList}">목표 대학 관리</a></li>
+									<li><a th:href="@{/study/getTargetGradeList}">목표 등급 관리</a></li>
+									<li><a th:href="@{/study/getLearningScheduleList}">학습 목표 관리</a></li>
+								</ul>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="col-lg-3">
+					<div class="header__cart" th:if="${session.loggedInUser == null}">
+						<ul>
+							<li>
+								<div class="header__top__right__auth">
+									<a href="/user/loginMove"> <i class="fa fa-user"></i> 로그인
+									</a>
+								</div>
+							</li>
+							<li>
+								<div class="header__top__right__auth">
+									<a href="/user/userJoinMove"> <i class="fa fa-pencil"></i>
+										회원가입
+									</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="header__cart" th:if="${session.loggedInUser != null}">
+						<div class="header__top__right__auth dropdown">
+							<a href="#" class="dropdown-toggle">
+								<i class="fa fa-user"></i> <span style="all: unset;"
+									th:text="${session.loggedInUser.userName}">사용자 이름</span>님!
+							</a>
+							<div class="dropdown-menu" style="min-width: 158px !important;">
+								<a href="/user/userMyPage">프로필 보기</a>
+								<th:block th:if="${session.loggedInUser.gradeCode == 'ugc1'}">
+									<a href="/admin/exam/category">관리자메뉴이동</a>
+								</th:block>
+								<a href="/user/logout">로그아웃</a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="humberger__open">
+				<i class="fa fa-bars"></i>
+			</div>
+		</div>
+	</header>
+	<!-- Header Section End -->
+</div>
+
+
+</html>

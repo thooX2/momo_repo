@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>MOMO</title>
+<link href="/user/css/user/user_join.css" rel="stylesheet">
+<script charset="UTF-8" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<div layout:fragment="content">
+	<div id="momoDefault">
+		<body>
+			<hr>
+			<!-- 콘텐츠 시작 { -->
+			<div class="wrapper">
+				<div id="formContent">
+					<form id="fregisterform" name="fregisterform" action="/user/userJoinAction" method="post" enctype="multipart/form-data"
+						autocomplete="off">
+						<div id="register_form" class="form_01">
+							<h3> 회원가입 정보 </h3>
+							<div class="regi_table">
+								<table>
+									<colgroup>
+										<col width="130">
+										<col width="*">
+									</colgroup>
+									<tbody>
+										<tr>
+											<th scope="row"><label for="reg_mb_id" class="req">아이디</label></th>
+											<td>
+												<input type="text" name="userId" value="" id="reg_mb_id" required=""
+													class="reg_input" minlength="4" maxlength="20"
+													placeholder="영문소문자/숫자, 8~20자">
+												<div id="msg_mb_id" class="reg_msg"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label for="reg_mb_password" class="req">비밀번호</label>
+											</th>
+											<td>
+												<input type="password" name="userPw" id="reg_mb_password" required=""
+													class="reg_input" minlength="3" maxlength="20"
+													placeholder="영문대소문자/숫자/특수문자, 8~20자">
+												<div id="msg_mb_pw" class="reg_msg"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label for="reg_mb_password_re" class="req">비밀번호 확인</label></th>
+											<td>
+												<input type="password" name="userPwCheck" id="reg_mb_password_re"
+													required="" class="reg_input" minlength="3" maxlength="20">
+												<div id="msg_mb_pw_check" class="reg_msg"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label for="reg_mb_name" class="req">이름</label></th>
+											<td>
+												<input type="text" id="reg_mb_name" name="userName" value="" required=""
+													class="reg_input">
+												<div id="msg_mb_name" class="reg_msg"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label for="userZip" class="req">주소</label></th>
+											<td>
+												<input type="text" name="userZip" value="" id="userZip" required=""
+													class="reg_input" style="width:30%;" maxlength="6" placeholder="우편번호" readonly>
+												<button type="button" class="btn_frmline" style="line-height: 38px;"
+													onclick="findAddr();">주소검색</button><br>
+												<input type="text" name="userAddress" value="" id="userAddress"
+													required="" class="reg_input" placeholder="기본주소" readonly>
+												<input type="text" name="userDetailAddress" id="userDetailAddress"
+													class="reg_input" placeholder="상세주소">
+												<input type="hidden" id="addrSigungu" value="">
+												<input type="hidden" id="roadJibun" value="">
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label for="hp1" class="req">휴대전화</label></th>
+											<td>
+												<div class="telselect_wrap">
+													<select name="hp1" id="hp1" class="reg_input" required="" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+														<option value="010">010</option>
+														<option value="011">011</option>
+														<option value="016">016</option>
+														<option value="017">017</option>
+														<option value="018">018</option>
+														<option value="019">019</option>
+													</select> <b>-</b>
+													<input type="text" name="hp2" value="" id="hp2" class="reg_input" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+														maxlength="4" required=""> <b>-</b>
+													<input type="text" name="hp3" value="" id="hp3" class="reg_input" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+														maxlength="4" required="">
+												</div>
+												<div id="msg_mb_phone" class="reg_msg"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label for="email1" class="req">이메일</label></th>
+											<td>
+												<div class="emailselect_wrap">
+													<input type="text" name="email1" value="" id="email1"
+														class="reg_input" maxlength="20" required="">
+													<b>@</b>
+													<input type="text" name="email2" value="" id="email2"
+														class="reg_input" maxlength="20" required="" readonly="">
+													<select name="email3" id="email3" class="reg_input" required="">
+														<option value="">선택하세요</option>
+														<option value="직접입력">직접입력</option>
+														<option value="naver.com">naver.com</option>
+														<option value="gmail.com">gmail.com</option>
+														<option value="hanmail.com">hanmail.com</option>
+													</select>
+												</div>
+												<div id="msg_mb_email" class="reg_msg"></div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label class="req">생년월일</label></th>
+											<td>
+												<div class="telselect_wrap">
+													<input type="date" name="userBirthDate" id="reg_mb_birth" class="reg_input" required="">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row"><label class="req">성별</label></th>
+											<td>
+												<div class="telselect_wrap">
+													<select name="userGender" id="gender" class="reg_input" required="">
+														<option value="m">남</option>
+														<option value="f">여</option>
+													</select>
+												</div>
+											</td>
+										</tr>
+<!-- 										<tr> -->
+<!-- 											<th scope="row"><label>학교</label></th> -->
+<!-- 											<td> -->
+<!-- 												<input type="text" id="userSchool" name="userSchool" value="" -->
+<!-- 													class="reg_input"> -->
+<!-- 											</td> -->
+<!-- 										</tr> -->
+<!-- 										<tr> -->
+<!-- 											<th scope="row"><label>학년</label></th> -->
+<!-- 											<td> -->
+<!-- 												<div class="telselect_wrap"> -->
+<!-- 													<select name="userLevel" id="userLevel" class="reg_input"> -->
+<!-- 														<option value="1">1</option> -->
+<!-- 														<option value="2">2</option> -->
+<!-- 														<option value="3">3</option> -->
+<!-- 													</select> -->
+<!-- 												</div> -->
+<!-- 											</td> -->
+<!-- 										</tr> -->
+<!-- 										<tr> -->
+<!-- 											<th scope="row"><label>계열</label></th> -->
+<!-- 											<td> -->
+<!-- 												<div class="telselect_wrap"> -->
+<!-- 													<select name="userSerial" id="userSerial" class="reg_input"> -->
+<!-- 														<option value="aff1">인문계</option> -->
+<!-- 														<option value="aff2">실업계</option> -->
+<!-- 													</select> -->
+<!-- 												</div> -->
+<!-- 											</td> -->
+<!-- 										</tr> -->
+									</tbody>
+								</table>
+							</div>
+							<div class="btn_confirm">
+								<input type="button" class="btn_cancel" value="CANCLE" onClick="location.href='/'">
+								<input type="button" class="btn_submit" value="JOIN" id="joinBtn">
+							</div>
+						</div>
+					</form>
+
+					<script>
+						const $birthDate = document.getElementById('reg_mb_birth');
+						$birthDate.setAttribute('min', '1900-01-01');
+						const today = new Date();
+						const year = today.getFullYear();
+						let month = today.getMonth() + 1;
+						if(month < 10) month = '0' + month;
+						let date = today.getDate();
+						if(date < 10) day = '0' + date;
+						const maxday = year + '-' + month + '-' + date;
+						$birthDate.setAttribute('max', maxday);
+					
+						const $email2 = document.getElementById('email2');
+						const $email3 = document.getElementById('email3');
+						
+						$email3.addEventListener('change', function() {
+							if(this.value == '직접입력') {
+								$email2.removeAttribute('readonly');
+							} else {
+								$email2.value = $email3.value;
+							}
+						})
+					
+						const $joinBtn = document.getElementById('joinBtn');
+						const $fregisterform = document.getElementById('fregisterform');
+						$joinBtn.addEventListener('click', function() {
+								const $reg_msg = document.querySelectorAll('.reg_msg');
+								$reg_msg.forEach(element => {
+									element.textContent = '';
+								})
+								fregisterform_submit($fregisterform, function(isSubmit){								
+									if(isSubmit) $fregisterform.submit();
+							})
+							
+						});
+						
+						function findAddr() {
+							new daum.Postcode({
+								shorthand : false,
+								oncomplete: function (data) {
+									// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+									// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+									// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+									let sigungu = ''; // 주소 변수
+									let road_jibun = '';
+									let sp;
+									//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+									if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+										sp = data.roadAddress.split(data.roadname);
+										road_jibun = data.roadname;
+									} else { 
+										// 사용자가 지번 주소를 선택했을 경우(J)
+										sp = data.jibunAddress.split(data.bname);
+										road_jibun = data.bname;
+									}
+									sigungu = sp[0];
+									for(let i = 1; i < sp.length; i+=1) {
+										road_jibun += sp[i];
+									}
+
+									// 우편번호와 주소 정보를 해당 필드에 넣는다. (화면에 보여주기 위함)
+									document.getElementById('userZip').value = data.zonecode;
+									document.getElementById('userAddress').value = sigungu + road_jibun;
+									// 커서를 상세주소 필드로 이동한다.
+									document.getElementById('userDetailAddress').focus();
+									
+									// 실제 서버로 넘어가는 값
+									const $addrSigungu = document.getElementById('addrSigungu').value = sigungu.trim();
+									document.getElementById('roadJibun').value = road_jibun.trim();
+								}
+							}).open();
+						}
+						
+						function fregisterform_submit(formData, callback) {
+							let isSubmit = true;
+							const userPhone = formData.hp1.value + '-' + formData.hp2.value + '-' + formData.hp3.value;
+							const userEmail = formData.email1.value + '@' + formData.email2.value;
+							
+ 					 		const request = $.ajax({
+ 								url : '/user/userJoinCheck',
+ 								method : 'post',
+ 								data : {
+ 									'userId' : formData.userId.value,
+ 									'userPw' : formData.userPw.value,
+  									'userPwCheck' : formData.userPwCheck.value,
+ 									'userName' : formData.userName.value,
+ 									'userZip' : formData.userZip.value,
+ 									'userAddress' : formData.userAddress.value,
+ 									'userDetailAddress' : formData.userDetailAddress.value,
+ 									'userAddrSigungu' : formData.addrSigungu.value,
+ 									'userRoadJibun' : formData.roadJibun.value,
+ 									'userPhone' : userPhone,
+ 									'userEmail' : userEmail,
+ 									'userBirthDate' : formData.userBirthDate.value,
+ 									'userGender' : formData.userGender.value
+ 								}, 
+ 								dataType: 'json'
+ 							});
+				 		
+  					 		request.done(function(response) {
+								
+ 								if(!response.success) {
+ 									isSubmit = false;
+ 									let $errorPos;
+ 									if(response.errorCode == 'IdError') {
+ 										$errorPos = document.getElementById('msg_mb_id');
+ 									} else if(response.errorCode == 'PwError') {
+ 										$errorPos = document.getElementById('msg_mb_pw');
+ 									} else if(response.errorCode == 'PwCheckError') {
+ 										$errorPos = document.getElementById('msg_mb_pw_check');
+ 									} else if(response.errorCode == 'NameError') {
+ 										$errorPos = document.getElementById('msg_mb_name');
+ 									} else if(response.errorCode == 'PhoneError') {
+ 										$errorPos = document.getElementById('msg_mb_phone');
+ 									} else if(response.errorCode == 'EmailError') {
+ 										$errorPos = document.getElementById('msg_mb_email');
+ 									}
+ 									$errorPos.textContent=response.errorMessage;
+ 									callback(isSubmit);
+ 								}else{
+									location.href="/user/loginMove"
+								}
+ 							});
+						
+ 							request.fail(function(jqXHR, textStatus, error){
+ 								
+ 							});
+					 		
+  					 		return isSubmit;
+							//return response.isSuccess;
+						}
+					</script>
+
+					<!-- } 회원정보 입력/수정 끝 -->
+				</div>
+
+			</div>
+			<!-- } 콘텐츠 끝 -->
+		</body>
+	</div>
+</div>
+</html>
