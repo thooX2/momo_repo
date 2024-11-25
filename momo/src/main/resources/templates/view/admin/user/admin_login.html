@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- Basic Page Info -->
+	<meta charset="utf-8">
+	<title>MOMO 관리자 로그인 </title>
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+		rel="stylesheet">
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="/admin/css/exam/adminLogin/core.css">
+	<link rel="stylesheet" type="text/css" href="/admin/css/exam/adminLogin/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="/admin/css/exam/adminLogin/style.css">
+</head>
+<style>
+	.select-role .btn-group .btn {
+		width: calc(33% - 10px) !important;
+		font-size: 10px;
+	}
+</style>
+
+<body class="login-page">
+	<div class="login-header box-shadow">
+		<div class="container-fluid d-flex justify-content-between align-items-center">
+			<div class="brand-logo">
+				<a href="login.html">
+					<img src="/admin/img/exam/adminLogin/logo.png" alt="">
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-6 col-lg-7">
+					<img src="/admin/img/exam/adminLogin/login-page-img.png" alt="">
+				</div>
+				<div class="col-md-6 col-lg-5">
+					<div class="login-box bg-white box-shadow border-radius-10">
+						<div class="login-title">
+							<h2 class="text-center text-primary" style="color:rgb(0,90,167) !important">Login To MoMo
+							</h2>
+						</div>
+						<form action="/admin/adminLoginMove" method="post">
+							<div class="select-role">
+								<div class="btn-group btn-group-toggle" data-toggle="buttons">
+									<label class="btn active">
+										<input type="radio" name="options" id="seller">
+										<div class="icon"><img src="/admin/img/exam/adminLogin/seller.png" class="svg"
+												alt=""></div>
+										<span>I'm</span>
+										관리자
+									</label>
+									<label class="btn">
+										<!--<input type="radio" name="options" id="user">-->
+										<div class="icon">
+											<img src="/admin/img/exam/adminLogin/person.svg" class="svg" alt="">
+										</div>
+										<span>I'm</span>
+										사용자
+									</label>
+								</div>
+							</div>
+							<div class="input-group custom">
+								<input type="text" name="userId" class="form-control form-control-lg" placeholder="아이디"
+									required>
+								<div class="input-group-append custom">
+									<span class="input-group-text"><i class="icon-copy dw dw-user1"></i></span>
+								</div>
+							</div>
+							<div class="input-group custom">
+								<input type="password" name="userPw" class="form-control form-control-lg"
+									placeholder="비밀번호" required>
+								<div class="input-group-append custom">
+									<span class="input-group-text"><i class="dw dw-padlock1"></i></span>
+								</div>
+							</div>
+
+							<div class="row" style="margin-top:40px">
+								<div class="col-sm-12">
+									<div class="input-group mb-0">
+										<!--
+											use code for form submit
+											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
+										-->
+										<button class="btn btn-primary btn-lg btn-block" type="submit"
+											style="font-weight: bolder;background-color:rgb(0,90,167) !important;border-color: rgb(0,90,167) !important;">로그인</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- js -->
+	<!--<script src="/admin/js/exam/adminLogin/core.js"></script>-->
+	<!--<script src="vendors/scripts/script.min.js"></script>
+	<script src="vendors/scripts/process.js"></script>
+	<script src="vendors/scripts/layout-settings.js"></script>-->
+	<script th:inline="javascript">
+		var errorMessage =/*[[${error}]]*/[]
+		if (errorMessage.length != null)
+			alert(errorMessage)
+	</script>
+</body>
+
+</html>

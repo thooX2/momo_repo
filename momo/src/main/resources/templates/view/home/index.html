@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+	
+<head>
+	<link rel="stylesheet" type="text/css" href="/home/css/home.css" />
+</head>
+<div layout:fragment="content" id="momoDefault">
+	<!-- Hero Section Begin -->
+	<section class="hero">
+		<div class="container">
+			<div class="row" style="display: flex; justify-content: center; align-items: center;">
+				<div class="col-lg-9">
+					<div id="heroItem" class="hero__item">
+						<div class="hero__text">
+							<span style="color: rgb(0, 90, 167) !important"> 수능/모평/학평</span>
+							<h2>원클릭 <br/>모의고사 응시</h2>
+							<p id="heroP">기출문제,정답,해설</p>
+							<a id="examBtn" href="/exam/examList" class="primary-btn">모의고사 응시</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Hero Section End -->
+
+	<!-- Categories Section Begin -->
+	<section class="categories">
+		<div class="container">
+			<div class="row">
+				<div class="categories__slider owl-carousel">
+					<div class="col-lg-3">
+						<div id="categoriesExamList" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/exam/examList">모의고사 목록</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesUserExamResultList" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/exam/userExamResultList">모의고사 응시 목록</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesUserExamAnalyse" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/exam/userExamAnalyse">모의고사 결과 분석</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesScoreMain" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/score/scoreMain">모의고사 성적 조회</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesExamScoreSummary" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/score/examScoreAllSummary">모의고사 점수별 성적 조회</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesExamScoreList" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/score/examAllScoreList">모의고사 성적 목록</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesCastSubjectList" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/study/getCastSubjectList">목표 과목 관리</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesTargetUniversityList" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/study/getTargetUniversityList">목표 대학 관리</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesTargetGradeList" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/study/getTargetGradeList">목표 등급 관리</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesLearningScheduleList" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/study/getLearningScheduleList">학습 목표 관리</a></h5>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<div id="categoriesSiteMap" class="categories__item categories-div">
+							<h5><a class="categories-site-map-a" href="/siteMap">사이트 맵</a></h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Categories Section End -->
+</div>
+</html>
